@@ -10,33 +10,18 @@ export const useShoppingCart = () => {
         // console.log('onProductOnChange', count, product);
 
         setShoppingCart(oldShoppingcart => {
+            if(count === 0){
 
-        const productInCart:ProductInCart = oldShoppingcart[product.id] || {...product, count: 0};
+            const {[product.id]: toDelete, ...rest } = oldShoppingcart;
+            console.log({toDelete});
 
-        if(Math.max(productInCart.count + count, 0) > 0 ){
-            productInCart.count += count;
+            return rest
+            }
+
             return {
             ...oldShoppingcart,
-            [product.id]:productInCart
+            [product.id]: {...product,count}
             }
-        }
-
-        //*Borrar el producto
-        const {[product.id]: toDelete, ...rest } = oldShoppingcart;
-        return { ...rest }
-
-        // if(count === 0){
-
-        //   const {[product.id]: toDelete, ...rest } = oldShoppingcart;
-        //   console.log({toDelete});
-
-        //   return rest
-        // }
-
-        // return {
-        //   ...oldShoppingcart,
-        //   [product.id]: {...product,count}
-        // }
         })
 
     }
